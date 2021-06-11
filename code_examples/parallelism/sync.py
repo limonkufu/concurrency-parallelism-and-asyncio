@@ -1,11 +1,14 @@
-import time
+import timeit
 
-print("Starting...")
-start = time.time()
+def multiply():
+    for i in range(1000000, 1000016):
+        pow(i, i)
+        print('okay')
 
-for i in range(1000000, 1000016):
-    pow(i, i)
-    print('okay')
+R = 10
+N = 1
 
-end = time.time()
-print(f"Time to complete: {round(end - start, 2)}")
+t = timeit.Timer(multiply)
+duration = t.repeat(repeat=R, number=N)
+
+print(f"Time to complete({N} times repeated x{R} ): {round(min(duration), 2)}")

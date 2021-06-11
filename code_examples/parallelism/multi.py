@@ -1,11 +1,8 @@
 import concurrent.futures
-import time
+import timeit
 
-if __name__ == "__main__":
+def multiply():
     pow_list = [i for i in range(1000000, 1000016)]
-
-    print("Starting...")
-    start = time.time()
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         futures = [executor.submit(pow, i, i) for i in pow_list]
@@ -13,5 +10,15 @@ if __name__ == "__main__":
     for f in concurrent.futures.as_completed(futures):
         print('okay')
 
-    end = time.time()
-    print(f"Time to complete: {round(end - start, 2)}")
+
+if __name__ == "__main__":
+    
+    print("Starting...")
+    
+    R = 10
+    N = 1
+
+    t = timeit.Timer(multiply)
+    duration = t.repeat(repeat=R, number=N)
+
+    print(f"Time to complete({N} times repeated x{R} ): {round(min(duration), 2)}")
