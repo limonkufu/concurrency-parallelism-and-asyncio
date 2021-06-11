@@ -18,7 +18,7 @@ def write_genre():
     )
     genre = json.load(urlopen(req))
     clean_genre = clean(
-        genre.replace(" ","_").replace("/","-"),
+        genre.replace(" ", "_").replace("/", "-"),
         fix_unicode=True,  # fix various unicode errors
         to_ascii=True,  # transliterate to closest ASCII representation
         lower=True,  # lowercase text
@@ -47,13 +47,14 @@ def write_genre():
 
 print("Starting...")
 
-N = 100
+N = 10
+R = 100
 
 t = timeit.Timer(write_genre)
-duration = t.timeit(N)
+duration = t.repeat(repeat=R, number=N)
 
 print(
-    f"Time to complete synchronous read/writes ({N} times ): {round(duration, 2)} seconds"
+    f"Time to complete synchronous read/writes ({N} times repeated x{R} ): {round(min(duration), 2)} seconds"
 )
 
 files = glob.glob("./sync/*.txt")
